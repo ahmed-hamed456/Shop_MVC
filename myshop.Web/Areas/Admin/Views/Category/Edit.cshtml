@@ -1,0 +1,49 @@
+﻿@model Category
+
+@{
+    ViewBag.pageTitle = "Category Management";
+    ViewBag.CardTitle = "Edit Category";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+
+
+<form asp-action="Edit" method="post">
+    <input hidden asp-for="Id"/>
+
+     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description"></label>
+        <textarea id="Catogory_Description" asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Save</button>
+    </div> 
+</form>
+
+<div>
+    <a asp-action="Index">Back To Index</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="https://cdn.tiny.cloud/1/dhbqz9g0i0t1xq14y0rtqhim7tyo8l2e0gvj360aiyne2h7x/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#Catogory_Description',
+            readonly: false,
+            api_key: "dhbqz9g0i0t1xq14y0rtqhim7tyo8l2e0gvj360aiyne2h7x"
+        });
+    </script>
+}
