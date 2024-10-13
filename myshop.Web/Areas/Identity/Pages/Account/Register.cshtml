@@ -5,6 +5,18 @@
 
 <h1>@ViewData["Title"]</h1>
 
+<style>
+    .imgdiv{
+        background-size: 100% 100%;
+    }
+
+    .loginimag{
+        height : auto;
+        max-width : 100%;
+    }
+
+</style>
+
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
 <div class="row">
@@ -67,7 +79,10 @@
     </div>
     <div class="col-md-6 col-md-offset-2">
         <section>
-            <h3>Use another service to register.</h3>
+            <div class="imgdiv">
+                 <img class="loginimag" src="~/img/login@4x.png" />
+            </div>
+            @* <h3>Use another service to register.</h3>
             <hr />
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
@@ -92,7 +107,7 @@
                         </div>
                     </form>
                 }
-            }
+            } *@
         </section>
     </div>
 </div>

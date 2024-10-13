@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using myshop.Utilities;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Stripe;
+using myshop.DataAccess.DbInitializer;
 
 namespace myshop.Web
 {
@@ -33,7 +34,7 @@ namespace myshop.Web
 
             builder.Services.AddSingleton<IEmailSender,EmailSender>();
             builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
-
+            builder.Services.AddScoped<IDbInitializer,DbInitializer>();
 
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession();
@@ -55,6 +56,8 @@ namespace myshop.Web
 
             StripeConfiguration.ApiKey = builder.Configuration.GetSection("stripe:Secretkey").Get<string>();
 
+            SeedDb();
+
             app.UseAuthentication();
 
             app.UseAuthorization();
@@ -72,6 +75,16 @@ namespace myshop.Web
                 pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
+
+            void SeedDb()
+            {
+                using(var scope = app.Services.CreateScope())
+                {
+                    var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+
+                    dbInitializer.Initialize();
+                }
+            }
         }
     }
 }
